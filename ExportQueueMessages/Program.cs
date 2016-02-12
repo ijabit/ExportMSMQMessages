@@ -17,6 +17,7 @@ namespace ExportQueueMessages
                 Console.WriteLine(".\\" + queue.QueueName);
             }
 
+            // TODO: make below only run when on a domain joined machine
             //queues = MessageQueue.GetPublicQueuesByMachine(Environment.MachineName);
             //foreach (var queue in queues)
             //{
@@ -67,7 +68,7 @@ namespace ExportQueueMessages
             //Setup MSMQ using path from user...
             MessageQueue q = new MessageQueue(queueName);
 
-            // Loop over all messages and write them to a file... (in this case XML)
+            // Loop over all messages and write them to a file...
             q.MessageReadPropertyFilter.SetAll();
             MessageEnumerator msgEnum = q.GetMessageEnumerator2();
             int k = 0;
@@ -81,7 +82,6 @@ namespace ExportQueueMessages
                 msg.BodyStream.Read(data, 0, (int)msg.BodyStream.Length);
                 string strMessage = ASCIIEncoding.ASCII.GetString(data);
 
-                //msg.Formatter = new ActiveXMessageFormatter();
                 string fileName = outputFolderPath + "\\" + msg.ArrivedTime.ToString("yyyy-MM-dd hh.mm.ss tt") + "-" + msg.Id.Replace("\\", "-") + ".xml";
                 System.IO.File.WriteAllText(fileName, strMessage);
                 k++;
