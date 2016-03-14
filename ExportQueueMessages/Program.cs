@@ -89,7 +89,7 @@ namespace ExportQueueMessages
                 string messageContent = ASCIIEncoding.ASCII.GetString(data);
 
                 string fileName = outputFolderPath + "\\" + msg.ArrivedTime.ToString("yyyy-MM-dd hh.mm.ss tt") + "-" + msg.Id.Replace("\\", "-") + ".xml";
-                string messageWithHeaders = $"<?xml version=\"1.0\"?><MsmqMessage><Id>{msg.Id}</Id><ArrivedTime>{msg.ArrivedTime}</ArrivedTime><Label>{msg.Label}</Label><Headers>";
+                string messageWithHeaders = $"<?xml version=\"1.0\"?><MsmqMessage><Id>{msg.Id}</Id><ArrivedTime>{msg.ArrivedTime}</ArrivedTime><Label>{msg.Label}</Label><Class>{msg.Acknowledgment}</Class><Headers>";
                 var headers = DeserializeMessageHeaders(msg);
                 foreach (var header in headers)
                 {
